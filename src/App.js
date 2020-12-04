@@ -21,6 +21,7 @@ const Wrap = styled.div`
   justify-content: center;
   font-family: "PT Sans", sans-serif;
 `;
+
 const GlobalStyles = createGlobalStyle`        
   ul, li {
     list-style-type: none;
@@ -29,6 +30,10 @@ const GlobalStyles = createGlobalStyle`
   h2 {
     text-align: center;
     padding-bottom: 20px;
+    
+    @media only screen and (max-width: 480px) {
+      font-size: 12pt;
+    }
   }
 `;
 export default App;
