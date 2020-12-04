@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Birthdays from "./Birthdays";
 import styled from "styled-components";
-
-import { getUsersData, GetUsersData } from "../utils/GetUsersData";
-import { FetchUsersList } from "../API/users";
+import { formatData } from "../utils/FormatData";
+import { FetchUsersList } from "../api/users";
 
 function Employees() {
   const [data, setData] = useState([]);
@@ -29,7 +28,7 @@ function Employees() {
     }
   }
 
-  const usersData = getUsersData(data),
+  const usersData = formatData(data),
     updateCheckedUsers = (e) => {
       let tmp = [...checkedUsers];
       console.log("tmp", tmp);

@@ -1,6 +1,6 @@
-import { letters } from "./constLetters";
+import { letters } from "./contants";
 
-export function getUsersData(data) {
+export function formatData(data) {
   return letters.reduce((acc, letter) => {
     return {
       ...acc,

@@ -1,22 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { months } from "../utils/contants";
 
 function Birthdays({ checkedUsers }) {
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   const users =
     checkedUsers &&
     checkedUsers
