@@ -1,44 +1,42 @@
 import React from "react";
 import styled from "styled-components";
+
 import { months } from "../utils/contants";
 
 function Birthdays({ checkedUsers }) {
   const users =
     checkedUsers &&
     checkedUsers
-      .map((user) => {
-        return { ...user, dob: new Date(user.dob) };
-      })
+      .map((user) => ({ ...user, dob: new Date(user.dob) }))
+
       .sort((a, b) => new Date(a.dob) - new Date(b.dob));
 
   return (
     <BirthdaysContainer>
-      {
-        <>
-          <h2>Employees birthday</h2>
-          <ul>
-            {users &&
-              months.map((month, index) => {
-                const usersBornThisMonth = users.filter(
-                  (user) => user.dob.getMonth() === index
+      <>
+        <h2>Employees birthday</h2>
+        <ul>
+          {users &&
+            months.map((month, index) => {
+              const usersBornThisMonth = users.filter(
+                (user) => user.dob.getMonth() === index
+              );
+              if (!usersBornThisMonth.length) return null;
+              let tmp = [];
+              tmp.push(<h3 key={index}>{month}</h3>);
+              usersBornThisMonth.forEach((user) => {
+                tmp.push(
+                  <li key={user.id}>{`${user.lastName} ${
+                    user.firstName
+                  } - ${new Date(user.dob).getDate()} ${
+                    months[new Date(user.dob).getMonth()]
+                  }, ${new Date(user.dob).getFullYear()} year`}</li>
                 );
-                if (!usersBornThisMonth.length) return null;
-                let tmp = [];
-                tmp.push(<h3 key={`month${index}`}>{month}</h3>);
-                usersBornThisMonth.forEach((user) => {
-                  tmp.push(
-                    <li key={`birthday${user.id}`}>{`${user.lastName} ${
-                      user.firstName
-                    } - ${new Date(user.dob).getDate()} ${
-                      months[new Date(user.dob).getMonth()]
-                    }, ${new Date(user.dob).getFullYear()} year`}</li>
-                  );
-                });
-                return tmp;
-              })}
-          </ul>
-        </>
-      }
+              });
+              return tmp;
+            })}
+        </ul>
+      </>
     </BirthdaysContainer>
   );
 }

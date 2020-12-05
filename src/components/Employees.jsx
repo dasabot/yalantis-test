@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Birthdays from "./Birthdays";
 import styled from "styled-components";
-import { formatData } from "../utils/FormatData";
+
+import Birthdays from "./Birthdays";
+import { formatData } from "../utils/formatData";
 import { FetchUsersList } from "../api/users";
 
 function Employees() {
@@ -28,20 +29,20 @@ function Employees() {
     }
   }
 
-  const usersData = formatData(data),
-    updateCheckedUsers = (e) => {
-      let tmp = [...checkedUsers];
-      console.log("tmp", tmp);
+  const usersData = formatData(data);
 
-      if (e.target.checked) {
-        tmp.push(data.find((u) => u.id === e.target.id));
-      } else {
-        tmp = tmp.filter((user) => user.id !== e.target.id);
-      }
+  const updateCheckedUsers = (e) => {
+    let tmp = [...checkedUsers];
 
-      localStorage.setItem("checkedUsers", JSON.stringify(tmp));
-      setCheckedUsers(tmp);
-    };
+    if (e.target.checked) {
+      tmp.push(data.find((u) => u.id === e.target.id));
+    } else {
+      tmp = tmp.filter((user) => user.id !== e.target.id);
+    }
+
+    localStorage.setItem("checkedUsers", JSON.stringify(tmp));
+    setCheckedUsers(tmp);
+  };
 
   return (
     <>
@@ -49,34 +50,32 @@ function Employees() {
         <EmployeesContainer>
           <h2>Employees</h2>
           <Lists>
-            {Object.entries(usersData).map(([letter, users]) => {
-              return (
-                <ListItems key={letter}>
-                  <h3>{letter}</h3>
-                  <ul>
-                    {users.length > 0 ? (
-                      users.map((usr) => (
-                        <li key={usr.id}>
-                          <label htmlFor={usr.id}>
-                            {usr.lastName} {usr.firstName}
-                          </label>
-                          <Input
-                            onChange={updateCheckedUsers}
-                            id={usr.id}
-                            type="checkbox"
-                            checked={checkedUsers.find(
-                              (checkedUser) => checkedUser.id === usr.id
-                            )}
-                          />
-                        </li>
-                      ))
-                    ) : (
-                      <p>-----</p>
-                    )}
-                  </ul>
-                </ListItems>
-              );
-            })}
+            {Object.entries(usersData).map(([letter, users]) => (
+              <ListItems key={letter}>
+                <h3>{letter}</h3>
+                <ul>
+                  {users.length > 0 ? (
+                    users.map((usr) => (
+                      <li key={usr.id}>
+                        <label htmlFor={usr.id}>
+                          {usr.lastName} {usr.firstName}
+                        </label>
+                        <Input
+                          onChange={updateCheckedUsers}
+                          id={usr.id}
+                          type="checkbox"
+                          checked={checkedUsers.find(
+                            (checkedUser) => checkedUser.id === usr.id
+                          )}
+                        />
+                      </li>
+                    ))
+                  ) : (
+                    <p>-----</p>
+                  )}
+                </ul>
+              </ListItems>
+            ))}
           </Lists>
         </EmployeesContainer>
       }
