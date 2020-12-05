@@ -26,9 +26,9 @@ function Birthdays({ checkedUsers }) {
               tmp.push(<h3 key={index}>{month}</h3>);
               usersBornThisMonth.forEach((user) => {
                 tmp.push(
-                  <li key={user.id}>{`${user.lastName} ${
-                    user.firstName
-                  } - ${getFullDate(user.dob)}`}</li>
+                  <li key={user.id}>
+                    {user.lastName} {user.firstName} - {getFullDate(user.dob)}
+                  </li>
                 );
               });
               return tmp;
