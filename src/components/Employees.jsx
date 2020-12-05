@@ -21,7 +21,7 @@ function Employees() {
       setData(
         data.sort((a, b) => {
           const result = a.firstName.localeCompare(b.firstName);
-          return result !== 0 ? result : a.lastName.localeCompare(b.lastName);
+          return result || a.lastName.localeCompare(b.lastName);
         })
       );
     } catch (e) {
@@ -46,40 +46,37 @@ function Employees() {
 
   return (
     <>
-      {
-        <EmployeesContainer>
-          <h2>Employees</h2>
-          <Lists>
-            {Object.entries(usersData).map(([letter, users]) => (
-              <ListItems key={letter}>
-                <h3>{letter}</h3>
-                <ul>
-                  {users.length > 0 ? (
-                    users.map((usr) => (
-                      <li key={usr.id}>
-                        <label htmlFor={usr.id}>
-                          {usr.lastName} {usr.firstName}
-                        </label>
-                        <Input
-                          onChange={updateCheckedUsers}
-                          id={usr.id}
-                          type="checkbox"
-                          checked={checkedUsers.find(
-                            (checkedUser) => checkedUser.id === usr.id
-                          )}
-                        />
-                      </li>
-                    ))
-                  ) : (
-                    <p>-----</p>
-                  )}
-                </ul>
-              </ListItems>
-            ))}
-          </Lists>
-        </EmployeesContainer>
-      }
-
+      <EmployeesContainer>
+        <h2>Employees</h2>
+        <Lists>
+          {Object.entries(usersData).map(([letter, users]) => (
+            <ListItems key={letter}>
+              <h3>{letter}</h3>
+              <ul>
+                {users.length > 0 ? (
+                  users.map((usr) => (
+                    <li key={usr.id}>
+                      <label htmlFor={usr.id}>
+                        {usr.lastName} {usr.firstName}
+                      </label>
+                      <Input
+                        onChange={updateCheckedUsers}
+                        id={usr.id}
+                        type="checkbox"
+                        checked={checkedUsers.find(
+                          (checkedUser) => checkedUser.id === usr.id
+                        )}
+                      />
+                    </li>
+                  ))
+                ) : (
+                  <p>-----</p>
+                )}
+              </ul>
+            </ListItems>
+          ))}
+        </Lists>
+      </EmployeesContainer>
       <Birthdays checkedUsers={checkedUsers} />
     </>
   );
@@ -136,6 +133,8 @@ const ListItems = styled.li`
 const Input = styled.input`
   position: absolute;
   right: 30%;
+  cursor: pointer;
+  top: 1px;
 
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     right: 20%;

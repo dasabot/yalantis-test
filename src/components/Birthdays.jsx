@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 import { months } from "../utils/contants";
+import { getFullDate } from "../utils/formatData";
 
 function Birthdays({ checkedUsers }) {
   const users =
     checkedUsers &&
     checkedUsers
       .map((user) => ({ ...user, dob: new Date(user.dob) }))
-
       .sort((a, b) => new Date(a.dob) - new Date(b.dob));
 
   return (
@@ -28,9 +28,7 @@ function Birthdays({ checkedUsers }) {
                 tmp.push(
                   <li key={user.id}>{`${user.lastName} ${
                     user.firstName
-                  } - ${new Date(user.dob).getDate()} ${
-                    months[new Date(user.dob).getMonth()]
-                  }, ${new Date(user.dob).getFullYear()} year`}</li>
+                  } - ${getFullDate(user.dob)}`}</li>
                 );
               });
               return tmp;

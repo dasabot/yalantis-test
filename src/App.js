@@ -1,7 +1,7 @@
 import React from "react";
+import styled, { createGlobalStyle } from "styled-components";
+
 import Employees from "./components/Employees";
-import styled from "styled-components";
-import { createGlobalStyle } from "styled-components";
 
 function App() {
   return (
