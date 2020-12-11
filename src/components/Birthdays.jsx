@@ -5,6 +5,14 @@ import { months } from "../utils/contants";
 import { getFullDate } from "../utils/formatData";
 
 function Birthdays({ checkedUsers }) {
+  if (!checkedUsers.length) {
+    return (
+      <BirthdaysContainer>
+        <h2>Employees birthday</h2>
+        <NoSelect>No selected employees</NoSelect>
+      </BirthdaysContainer>
+    );
+  }
   const users =
     checkedUsers &&
     checkedUsers
@@ -13,28 +21,26 @@ function Birthdays({ checkedUsers }) {
 
   return (
     <BirthdaysContainer>
-      <>
-        <h2>Employees birthday</h2>
-        <ul>
-          {users &&
-            months.map((month, index) => {
-              const usersBornThisMonth = users.filter(
-                (user) => user.dob.getMonth() === index
+      <h2>Employees birthday</h2>
+      <ul>
+        {users &&
+          months.map((month, index) => {
+            const usersBornThisMonth = users.filter(
+              (user) => user.dob.getMonth() === index
+            );
+            if (!usersBornThisMonth.length) return null;
+            let tmp = [];
+            tmp.push(<h3 key={index}>{month}</h3>);
+            usersBornThisMonth.forEach((user) => {
+              tmp.push(
+                <li key={user.id}>
+                  {user.lastName} {user.firstName} - {getFullDate(user.dob)}
+                </li>
               );
-              if (!usersBornThisMonth.length) return null;
-              let tmp = [];
-              tmp.push(<h3 key={index}>{month}</h3>);
-              usersBornThisMonth.forEach((user) => {
-                tmp.push(
-                  <li key={user.id}>
-                    {user.lastName} {user.firstName} - {getFullDate(user.dob)}
-                  </li>
-                );
-              });
-              return tmp;
-            })}
-        </ul>
-      </>
+            });
+            return tmp;
+          })}
+      </ul>
     </BirthdaysContainer>
   );
 }
@@ -107,6 +113,11 @@ const BirthdaysContainer = styled.div`
       font-size: 11pt;
     }
   }
+`;
+
+const NoSelect = styled.span`
+  position: absolute;
+  left: 36%;
 `;
 
 export default Birthdays;
